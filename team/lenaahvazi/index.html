@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lena Ahvazi - Professional Resume</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+            --sidebar-width: 300px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar.mobile-hidden {
+            transform: translateX(-100%);
+        }
+        
+        .profile-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 4px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-title {
+            color: rgba(255,255,255,0.8);
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info {
+            font-size: 0.9rem;
+        }
+        
+        .contact-info i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-link {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            min-height: 100vh;
+            background: var(--bg-light);
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        .experience-item,
+        .education-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            background: var(--bg-light);
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .item-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-company,
+        .item-institution {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .item-description {
+            color: var(--text-dark);
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .skill-category {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .skill-category h4 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-name {
+            font-weight: 500;
+        }
+        
+        .skill-level {
+            width: 100px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.mobile-visible {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <a href="../../" class="home-btn">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="profile-section">
+            <img src="assets/lena-prof-pict.jpg" alt="Lena Ahvazi" class="profile-photo" onerror="this.src='https://via.placeholder.com/150x150/3498db/ffffff?text=Lena+Ahvazi'">
+            <h2 class="profile-name">Lena Ahvazi</h2>
+            <p class="profile-title">Professional Excellence</p>
+            <div class="contact-info">
+                <div class="mb-2">
+                    <i class="fas fa-envelope"></i>
+                    lena.ahvazi@email.com
+                </div>
+                <div class="mb-2">
+                    <i class="fas fa-phone"></i>
+                    +1 (555) 123-4567
+                </div>
+                <div class="mb-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    City, Country
+                </div>
+                <div class="mb-2">
+                    <i class="fab fa-linkedin"></i>
+                    linkedin.com/in/lenaahvazi
+                </div>
+            </div>
+        </div>
+
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#about" class="nav-link active" onclick="showSection('about')">
+                        <i class="fas fa-user"></i>About Me
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#experience" class="nav-link" onclick="showSection('experience')">
+                        <i class="fas fa-briefcase"></i>Experience
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#education" class="nav-link" onclick="showSection('education')">
+                        <i class="fas fa-graduation-cap"></i>Education
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#skills" class="nav-link" onclick="showSection('skills')">
+                        <i class="fas fa-cogs"></i>Skills
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#achievements" class="nav-link" onclick="showSection('achievements')">
+                        <i class="fas fa-trophy"></i>Achievements
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link" onclick="showSection('contact')">
+                        <i class="fas fa-envelope"></i>Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <section id="about" class="content-section active">
+            <h2 class="section-title">About Me</h2>
+            <p class="lead">Welcome! I'm Lena Ahvazi, a dedicated professional with a passion for excellence and innovation. I bring a unique blend of skills and experience to every project I undertake.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h4>Professional Summary</h4>
+                    <p>With years of experience in my field, I have developed a comprehensive skill set that allows me to tackle complex challenges with creativity and precision. My approach combines analytical thinking with practical solutions.</p>
+                </div>
+                <div class="col-md-6">
+                    <h4>Core Values</h4>
+                    <ul>
+                        <li>Excellence in everything I do</li>
+                        <li>Continuous learning and growth</li>
+                        <li>Collaborative teamwork</li>
+                        <li>Innovation and creativity</li>
+                        <li>Integrity and professionalism</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="content-section">
+            <h2 class="section-title">Professional Experience</h2>
+            
+            <div class="experience-item">
+                <h3 class="item-title">Senior Professional</h3>
+                <div class="item-company">Current Company</div>
+                <div class="item-date">2020 - Present</div>
+                <div class="item-description">
+                    <p>Leading cross-functional teams and driving strategic initiatives that have resulted in significant improvements in efficiency and quality. Key responsibilities include:</p>
+                    <ul>
+                        <li>Managing complex projects from conception to completion</li>
+                        <li>Collaborating with stakeholders to define requirements and deliverables</li>
+                        <li>Implementing best practices and process improvements</li>
+                        <li>Mentoring junior team members and fostering professional development</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <h3 class="item-title">Professional Associate</h3>
+                <div class="item-company">Previous Company</div>
+                <div class="item-date">2017 - 2020</div>
+                <div class="item-description">
+                    <p>Contributed to various high-impact projects while developing expertise in multiple areas. Achievements include:</p>
+                    <ul>
+                        <li>Successfully delivered projects on time and within budget</li>
+                        <li>Developed innovative solutions to complex challenges</li>
+                        <li>Built strong relationships with clients and colleagues</li>
+                        <li>Continuously expanded skill set through training and education</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <h3 class="item-title">Junior Professional</h3>
+                <div class="item-company">First Company</div>
+                <div class="item-date">2015 - 2017</div>
+                <div class="item-description">
+                    <p>Started my professional journey with enthusiasm and dedication, quickly establishing myself as a reliable team member.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="content-section">
+            <h2 class="section-title">Education</h2>
+            
+            <div class="education-item">
+                <h3 class="item-title">Master's Degree</h3>
+                <div class="item-institution">University Name</div>
+                <div class="item-date">2013 - 2015</div>
+                <div class="item-description">
+                    <p>Advanced studies in my field with focus on research and practical applications. Graduated with honors.</p>
+                </div>
+            </div>
+
+            <div class="education-item">
+                <h3 class="item-title">Bachelor's Degree</h3>
+                <div class="item-institution">University Name</div>
+                <div class="item-date">2009 - 2013</div>
+                <div class="item-description">
+                    <p>Comprehensive foundation in core subjects with excellent academic performance. Active in student organizations and leadership roles.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="content-section">
+            <h2 class="section-title">Skills & Expertise</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Technical Skills</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">Project Management</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Data Analysis</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Research</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Soft Skills</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">Leadership</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Communication</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 92%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Problem Solving</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="achievements" class="content-section">
+            <h2 class="section-title">Achievements & Awards</h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-trophy fa-3x text-warning"></i>
+                            </div>
+                            <h5 class="card-title">Excellence Award</h5>
+                            <p class="card-text">Recognized for outstanding performance and contribution to team success.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-medal fa-3x text-success"></i>
+                            </div>
+                            <h5 class="card-title">Innovation Recognition</h5>
+                            <p class="card-text">Awarded for developing innovative solutions that improved efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-star fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Leadership Excellence</h5>
+                            <p class="card-text">Recognized for exceptional leadership skills and team development.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-certificate fa-3x text-info"></i>
+                            </div>
+                            <h5 class="card-title">Professional Certification</h5>
+                            <p class="card-text">Obtained advanced certification in specialized field of expertise.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section">
+            <h2 class="section-title">Get In Touch</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Contact Information</h4>
+                    <div class="contact-info text-dark">
+                        <div class="mb-3">
+                            <i class="fas fa-envelope me-3"></i>
+                            <strong>Email:</strong> lena.ahvazi@email.com
+                        </div>
+                        <div class="mb-3">
+                            <i class="fas fa-phone me-3"></i>
+                            <strong>Phone:</strong> +1 (555) 123-4567
+                        </div>
+                        <div class="mb-3">
+                            <i class="fas fa-map-marker-alt me-3"></i>
+                            <strong>Location:</strong> City, Country
+                        </div>
+                        <div class="mb-3">
+                            <i class="fab fa-linkedin me-3"></i>
+                            <strong>LinkedIn:</strong> linkedin.com/in/lenaahvazi
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h4>Let's Connect</h4>
+                    <p>I'm always interested in discussing new opportunities, collaborations, or simply connecting with like-minded professionals. Feel free to reach out!</p>
+                    
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="mailto:lena.ahvazi@email.com" class="btn btn-primary">
+                            <i class="fas fa-envelope me-2"></i>Send Email
+                        </a>
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fab fa-linkedin me-2"></i>LinkedIn
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            
+            // Hide sidebar on mobile after selection
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('mobile-visible');
+            }
+        }
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('mobile-visible');
+        }
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !toggle.contains(e.target)) {
+                sidebar.classList.remove('mobile-visible');
+            }
+        });
+        
+        // Animate skill bars when skills section is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skillBars = entry.target.querySelectorAll('.skill-progress');
+                    skillBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 100);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+    </script>
+</body>
+</html>

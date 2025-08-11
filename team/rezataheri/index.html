@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reza Taheri - Technical Resume</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --text-dark: #2c3e50;
+            --text-light: #7f8c8d;
+            --bg-light: #f8f9fa;
+            --sidebar-width: 300px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            width: var(--sidebar-width);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+        
+        .sidebar.mobile-hidden {
+            transform: translateX(-100%);
+        }
+        
+        .profile-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+        }
+        
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            border: 4px solid rgba(255,255,255,0.3);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-photo:hover {
+            transform: scale(1.05);
+        }
+        
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-title {
+            color: rgba(255,255,255,0.8);
+            font-weight: 300;
+            margin-bottom: 1rem;
+        }
+        
+        .contact-info {
+            font-size: 0.9rem;
+        }
+        
+        .contact-info i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        
+        .nav-menu {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .nav-link {
+            display: block;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            margin-right: 10px;
+        }
+        
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            min-height: 100vh;
+            background: var(--bg-light);
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            display: none;
+        }
+        
+        .content-section.active {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        .experience-item,
+        .education-item,
+        .project-item {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            background: var(--bg-light);
+            border-radius: 0 10px 10px 0;
+        }
+        
+        .item-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-company,
+        .item-institution {
+            color: var(--secondary-color);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .item-date {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .item-description {
+            color: var(--text-dark);
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tech-tag {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .skill-category {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-top: 4px solid var(--secondary-color);
+        }
+        
+        .skill-category h4 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .skill-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .skill-name {
+            font-weight: 500;
+        }
+        
+        .skill-level {
+            width: 100px;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1001;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .home-btn:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        .project-links {
+            margin-top: 1rem;
+        }
+        
+        .project-link {
+            display: inline-block;
+            margin-right: 1rem;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .project-link:hover {
+            color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.mobile-visible {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .mobile-toggle {
+                display: block;
+            }
+            
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <a href="../../" class="home-btn">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+
+    <aside class="sidebar" id="sidebar">
+        <div class="profile-section">
+            <img src="assets/reza-prof-pict.jpeg" alt="Reza Taheri" class="profile-photo" onerror="this.src='https://via.placeholder.com/150x150/e74c3c/ffffff?text=Reza+Taheri'">
+            <h2 class="profile-name">Reza Taheri</h2>
+            <p class="profile-title">Technical Innovation</p>
+            <div class="contact-info">
+                <div class="mb-2">
+                    <i class="fas fa-envelope"></i>
+                    reza.taheri@email.com
+                </div>
+                <div class="mb-2">
+                    <i class="fas fa-phone"></i>
+                    +1 (555) 987-6543
+                </div>
+                <div class="mb-2">
+                    <i class="fas fa-map-marker-alt"></i>
+                    City, Country
+                </div>
+                <div class="mb-2">
+                    <i class="fab fa-linkedin"></i>
+                    linkedin.com/in/rezataheri
+                </div>
+                <div class="mb-2">
+                    <i class="fab fa-github"></i>
+                    github.com/rezataheri
+                </div>
+            </div>
+        </div>
+
+        <nav>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#about" class="nav-link active" onclick="showSection('about')">
+                        <i class="fas fa-user"></i>About Me
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#experience" class="nav-link" onclick="showSection('experience')">
+                        <i class="fas fa-briefcase"></i>Experience
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projects" class="nav-link" onclick="showSection('projects')">
+                        <i class="fas fa-code"></i>Projects
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#skills" class="nav-link" onclick="showSection('skills')">
+                        <i class="fas fa-cogs"></i>Technical Skills
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#education" class="nav-link" onclick="showSection('education')">
+                        <i class="fas fa-graduation-cap"></i>Education
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#certifications" class="nav-link" onclick="showSection('certifications')">
+                        <i class="fas fa-certificate"></i>Certifications
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link" onclick="showSection('contact')">
+                        <i class="fas fa-envelope"></i>Contact
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <section id="about" class="content-section active">
+            <h2 class="section-title">About Me</h2>
+            <p class="lead">Hello! I'm Reza Taheri, a passionate technologist and innovator with expertise in modern software development, system architecture, and emerging technologies.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h4>Technical Philosophy</h4>
+                    <p>I believe in building scalable, maintainable solutions using cutting-edge technologies. My approach combines solid engineering principles with innovative thinking to solve complex technical challenges.</p>
+                    
+                    <h4 class="mt-4">What I Do</h4>
+                    <ul>
+                        <li>Full-stack web development</li>
+                        <li>Cloud architecture and DevOps</li>
+                        <li>Mobile application development</li>
+                        <li>AI/ML integration</li>
+                        <li>System optimization and scaling</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h4>Core Principles</h4>
+                    <ul>
+                        <li>Clean, efficient code</li>
+                        <li>User-centered design</li>
+                        <li>Continuous learning and adaptation</li>
+                        <li>Collaborative development</li>
+                        <li>Performance optimization</li>
+                        <li>Security-first approach</li>
+                    </ul>
+                    
+                    <h4 class="mt-4">Current Focus</h4>
+                    <p>Currently exploring advanced AI/ML applications, microservices architecture, and cloud-native development patterns.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience" class="content-section">
+            <h2 class="section-title">Professional Experience</h2>
+            
+            <div class="experience-item">
+                <h3 class="item-title">Senior Software Engineer</h3>
+                <div class="item-company">Tech Innovation Corp</div>
+                <div class="item-date">2021 - Present</div>
+                <div class="item-description">
+                    <p>Leading development of scalable web applications and microservices architecture. Key achievements:</p>
+                    <ul>
+                        <li>Architected and implemented cloud-native solutions serving 100K+ users</li>
+                        <li>Reduced system latency by 40% through optimization and caching strategies</li>
+                        <li>Led a team of 5 developers in agile development cycles</li>
+                        <li>Implemented CI/CD pipelines reducing deployment time by 60%</li>
+                        <li>Mentored junior developers and established coding standards</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">Docker</span>
+                        <span class="tech-tag">Kubernetes</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <h3 class="item-title">Full Stack Developer</h3>
+                <div class="item-company">Digital Solutions Ltd</div>
+                <div class="item-date">2019 - 2021</div>
+                <div class="item-description">
+                    <p>Developed and maintained multiple client applications using modern web technologies:</p>
+                    <ul>
+                        <li>Built responsive web applications with React and Vue.js</li>
+                        <li>Developed RESTful APIs and GraphQL endpoints</li>
+                        <li>Implemented real-time features using WebSocket connections</li>
+                        <li>Optimized database queries improving performance by 35%</li>
+                        <li>Collaborated with UX/UI teams to implement pixel-perfect designs</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Vue.js</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Express.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Redis</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <h3 class="item-title">Software Developer</h3>
+                <div class="item-company">StartupTech Inc</div>
+                <div class="item-date">2017 - 2019</div>
+                <div class="item-description">
+                    <p>Contributed to early-stage startup development building MVP and scaling platform:</p>
+                    <ul>
+                        <li>Developed mobile-first web applications</li>
+                        <li>Implemented payment processing and user authentication</li>
+                        <li>Built admin dashboards with real-time analytics</li>
+                        <li>Participated in product planning and technical decision making</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">MySQL</span>
+                        <span class="tech-tag">Bootstrap</span>
+                        <span class="tech-tag">jQuery</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects" class="content-section">
+            <h2 class="section-title">Featured Projects</h2>
+            
+            <div class="project-item">
+                <h3 class="item-title">E-Commerce Platform</h3>
+                <div class="item-date">2023</div>
+                <div class="item-description">
+                    <p>Full-featured e-commerce platform with advanced search, real-time inventory management, and integrated payment processing.</p>
+                    <ul>
+                        <li>Microservices architecture with separate services for users, products, orders, and payments</li>
+                        <li>Real-time inventory updates using Redis and WebSockets</li>
+                        <li>Advanced search functionality with Elasticsearch</li>
+                        <li>Mobile-responsive design with PWA capabilities</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                        <span class="tech-tag">Redis</span>
+                        <span class="tech-tag">Elasticsearch</span>
+                        <span class="tech-tag">Stripe API</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <h3 class="item-title">AI-Powered Analytics Dashboard</h3>
+                <div class="item-date">2022</div>
+                <div class="item-description">
+                    <p>Intelligent dashboard providing predictive analytics and automated insights for business metrics.</p>
+                    <ul>
+                        <li>Machine learning models for trend prediction and anomaly detection</li>
+                        <li>Real-time data visualization with D3.js and Chart.js</li>
+                        <li>Automated report generation and email notifications</li>
+                        <li>Multi-tenant architecture supporting multiple organizations</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Django</span>
+                        <span class="tech-tag">TensorFlow</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">D3.js</span>
+                        <span class="tech-tag">PostgreSQL</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="#" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-item">
+                <h3 class="item-title">Real-Time Collaboration Tool</h3>
+                <div class="item-date">2021</div>
+                <div class="item-description">
+                    <p>Collaborative workspace application with real-time editing, video conferencing, and project management features.</p>
+                    <ul>
+                        <li>Real-time collaborative text editing using operational transforms</li>
+                        <li>Integrated video conferencing with WebRTC</li>
+                        <li>File sharing and version control system</li>
+                        <li>Role-based access control and team management</li>
+                    </ul>
+                    <div class="tech-stack">
+                        <span class="tech-tag">Vue.js</span>
+                        <span class="tech-tag">Socket.io</span>
+                        <span class="tech-tag">WebRTC</span>
+                        <span class="tech-tag">Node.js</span>
+                        <span class="tech-tag">MongoDB</span>
+                        <span class="tech-tag">AWS S3</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link"><i class="fab fa-github"></i> GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="content-section">
+            <h2 class="section-title">Technical Skills</h2>
+            
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Frontend Development</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">React/Next.js</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Vue.js/Nuxt.js</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">TypeScript</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">JavaScript ES6+</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Backend Development</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">Node.js</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 92%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Python</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Express.js</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Django/FastAPI</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Database & Storage</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">PostgreSQL</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">MongoDB</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Redis</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 82%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Elasticsearch</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="skill-category">
+                    <h4>Cloud & DevOps</h4>
+                    <div class="skill-item">
+                        <span class="skill-name">AWS</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Docker</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Kubernetes</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 78%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">CI/CD</span>
+                        <div class="skill-level">
+                            <div class="skill-progress" style="width: 82%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="content-section">
+            <h2 class="section-title">Education</h2>
+            
+            <div class="education-item">
+                <h3 class="item-title">Master of Science in Computer Science</h3>
+                <div class="item-institution">Technology University</div>
+                <div class="item-date">2015 - 2017</div>
+                <div class="item-description">
+                    <p>Specialized in Software Engineering and Artificial Intelligence. Thesis on "Machine Learning Applications in Web Performance Optimization".</p>
+                    <ul>
+                        <li>GPA: 3.8/4.0</li>
+                        <li>Graduate Teaching Assistant for Data Structures course</li>
+                        <li>Research published in IEEE conference proceedings</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="education-item">
+                <h3 class="item-title">Bachelor of Science in Computer Engineering</h3>
+                <div class="item-institution">Engineering College</div>
+                <div class="item-date">2011 - 2015</div>
+                <div class="item-description">
+                    <p>Comprehensive foundation in computer systems, programming, and mathematics. Senior project on distributed systems.</p>
+                    <ul>
+                        <li>Magna Cum Laude graduate</li>
+                        <li>President of Computer Science Student Association</li>
+                        <li>Winner of Annual Programming Competition (2014)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="certifications" class="content-section">
+            <h2 class="section-title">Certifications & Achievements</h2>
+            
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fab fa-aws fa-3x text-warning"></i>
+                            </div>
+                            <h5 class="card-title">AWS Certified Solutions Architect</h5>
+                            <p class="card-text text-muted">Professional level certification for designing distributed systems on AWS.</p>
+                            <small class="text-muted">Issued: 2023</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fab fa-google fa-3x text-primary"></i>
+                            </div>
+                            <h5 class="card-title">Google Cloud Professional Developer</h5>
+                            <p class="card-text text-muted">Expertise in developing scalable applications on Google Cloud Platform.</p>
+                            <small class="text-muted">Issued: 2022</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-certificate fa-3x text-success"></i>
+                            </div>
+                            <h5 class="card-title">Certified Kubernetes Administrator</h5>
+                            <p class="card-text text-muted">CNCF certification for Kubernetes cluster administration and orchestration.</p>
+                            <small class="text-muted">Issued: 2023</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-robot fa-3x text-info"></i>
+                            </div>
+                            <h5 class="card-title">TensorFlow Developer Certificate</h5>
+                            <p class="card-text text-muted">Google certification for machine learning and AI application development.</p>
+                            <small class="text-muted">Issued: 2022</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="content-section">
+            <h2 class="section-title">Let's Connect</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Contact Information</h4>
+                    <div class="contact-info text-dark">
+                        <div class="mb-3">
+                            <i class="fas fa-envelope me-3"></i>
+                            <strong>Email:</strong> reza.taheri@email.com
+                        </div>
+                        <div class="mb-3">
+                            <i class="fas fa-phone me-3"></i>
+                            <strong>Phone:</strong> +1 (555) 987-6543
+                        </div>
+                        <div class="mb-3">
+                            <i class="fas fa-map-marker-alt me-3"></i>
+                            <strong>Location:</strong> City, Country
+                        </div>
+                        <div class="mb-3">
+                            <i class="fab fa-linkedin me-3"></i>
+                            <strong>LinkedIn:</strong> linkedin.com/in/rezataheri
+                        </div>
+                        <div class="mb-3">
+                            <i class="fab fa-github me-3"></i>
+                            <strong>GitHub:</strong> github.com/rezataheri
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h4>Open for Opportunities</h4>
+                    <p>I'm always interested in discussing innovative projects, technical challenges, and collaboration opportunities. Whether you're looking for a technical consultant, full-time developer, or project partner, I'd love to hear from you!</p>
+                    
+                    <h5 class="mt-4">Availability</h5>
+                    <ul>
+                        <li>Full-time positions</li>
+                        <li>Consulting projects</li>
+                        <li>Technical mentoring</li>
+                        <li>Speaking engagements</li>
+                    </ul>
+                    
+                    <div class="d-flex gap-3 mt-4">
+                        <a href="mailto:reza.taheri@email.com" class="btn btn-primary">
+                            <i class="fas fa-envelope me-2"></i>Send Email
+                        </a>
+                        <a href="#" class="btn btn-outline-primary">
+                            <i class="fab fa-linkedin me-2"></i>LinkedIn
+                        </a>
+                        <a href="#" class="btn btn-outline-dark">
+                            <i class="fab fa-github me-2"></i>GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update navigation
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            
+            // Hide sidebar on mobile after selection
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('mobile-visible');
+            }
+        }
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('mobile-visible');
+        }
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(e) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.querySelector('.mobile-toggle');
+            
+            if (window.innerWidth <= 768 && 
+                !sidebar.contains(e.target) && 
+                !toggle.contains(e.target)) {
+                sidebar.classList.remove('mobile-visible');
+            }
+        });
+        
+        // Animate skill bars when skills section is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const skillBars = entry.target.querySelectorAll('.skill-progress');
+                    skillBars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0%';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 100);
+                    });
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        const skillsSection = document.getElementById('skills');
+        if (skillsSection) {
+            observer.observe(skillsSection);
+        }
+    </script>
+</body>
+</html>
